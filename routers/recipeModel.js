@@ -10,5 +10,8 @@ function getRecipes() {
 }
 
 function getShoppingList(id) {
-  return db("recipe_ingredients").where("RecipeID", id);
+  return db("recipe_ingredients as ri")
+  .join('products as p', 'p.id', '=', 'ri.IngredientsID')
+  .select('ri.Quantity','p.Name')
+  .where("RecipeID", id);
 }
